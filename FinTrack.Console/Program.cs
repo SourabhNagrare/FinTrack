@@ -17,14 +17,16 @@ while (isTrue)
     switch (choice)
     {
         case 1:
+            int amount = 0;
             try
             {
                 Console.WriteLine("Enter the amount: ");
-                int amount = int.Parse(Console.ReadLine());
+                amount = int.Parse(Console.ReadLine());
             }
             catch (FormatException)
             {
                 Console.WriteLine("Invalid Input!! please enter a valid number.");
+                break;
             }
 
 
@@ -67,14 +69,30 @@ static void ViewExpenses(List<Transaction> expenses)
     else
     {
         int totalExpenses = 0;
+
+        Dictionary<String,int> categoryTotals = new Dictionary<string, int>(); 
         foreach (Transaction i in expenses)
         {
             Console.WriteLine($"Amount: {i.Amount} | Category : {i.Category} | Date : {i.Date.ToShortDateString()}");
             totalExpenses += i.Amount;
+
+            if (categoryTotals.ContainsKey(i.Category))
+            {
+                categoryTotals[i.Category] += i.Amount;
+            }
+            else
+            {
+                categoryTotals[i.Category] = i.Amount;
+            }
         }
 
         Console.WriteLine("---------------------");
         Console.WriteLine($"Total Expenses: {totalExpenses}");
+
+        foreach(var pair in categoryTotals)
+        {
+            Console.WriteLine($"{pair.Key}: {pair.Value}");
+        }
         Console.ReadLine();
     }
 }

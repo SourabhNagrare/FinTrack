@@ -17,9 +17,17 @@ while (isTrue)
     switch (choice)
     {
         case 1:
-            Console.WriteLine("Enter the amount: ");
-            int amount = int.Parse(Console.ReadLine());
-            
+            try
+            {
+                Console.WriteLine("Enter the amount: ");
+                int amount = int.Parse(Console.ReadLine());
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Invalid Input!! please enter a valid number.");
+            }
+
+
             Console.WriteLine("Enter the Category: ");
             string category = Console.ReadLine();
 
@@ -73,7 +81,7 @@ static void ViewExpenses(List<Transaction> expenses)
 
 public class Transaction
 {
-    public int Amount {get; set;}
-    public string Category {get; set;}
-    public DateTime Date {get; set;}
+    public int Amount { get; set; }
+    public string Category { get; set; }
+    public DateTime Date { get; set; }
 }

@@ -2,7 +2,7 @@
 
 
 bool isTrue = true;
-List<int> expenses = new List<int>();
+List<Transaction> expenses = new List<Transaction>();
 
 while (isTrue)
 {
@@ -19,7 +19,19 @@ while (isTrue)
         case 1:
             Console.WriteLine("Enter the amount: ");
             int amount = int.Parse(Console.ReadLine());
-            expenses.Add(amount);
+            
+            Console.WriteLine("Enter the Category: ");
+            string category = Console.ReadLine();
+
+            // Object Creation
+            Transaction newTx = new Transaction();
+            newTx.Amount = amount;
+            newTx.Category = category;
+            newTx.Date = DateTime.Now; // This will fetch the current Date/Time
+
+            expenses.Add(newTx);
+
+
             System.Console.WriteLine("Expenses added successfully.");
             break;
 
@@ -38,7 +50,7 @@ while (isTrue)
     }
 }
 
-static void ViewExpenses(List<int> expenses)
+static void ViewExpenses(List<Transaction> expenses)
 {
     if (expenses.Count == 0)
     {
@@ -47,14 +59,21 @@ static void ViewExpenses(List<int> expenses)
     else
     {
         int totalExpenses = 0;
-        foreach (int i in expenses)
+        foreach (Transaction i in expenses)
         {
-            Console.WriteLine($"Expense: {i}");
-            totalExpenses += i;
+            Console.WriteLine($"Amount: {i.Amount} | Category : {i.Category} | Date : {i.Date.ToShortDateString()}");
+            totalExpenses += i.Amount;
         }
 
         Console.WriteLine("---------------------");
         Console.WriteLine($"Total Expenses: {totalExpenses}");
         Console.ReadLine();
     }
+}
+
+public class Transaction
+{
+    public int Amount {get; set;}
+    public string Category {get; set;}
+    public DateTime Date {get; set;}
 }

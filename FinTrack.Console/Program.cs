@@ -20,27 +20,11 @@ while (isTrue)
             Console.WriteLine("Enter the amount: ");
             int amount = int.Parse(Console.ReadLine());
             expenses.Add(amount);
-            System.Console.WriteLine("Expenses added successfully.");            
+            System.Console.WriteLine("Expenses added successfully.");
             break;
 
         case 2:
-            if (expenses.Count == 0)
-            {
-                Console.WriteLine("No expenses added yet!");
-            }
-            else
-            {
-                int totalExpenses = 0;
-                foreach (int i in expenses)
-                {
-                    Console.WriteLine($"Expense: {i}");
-                    totalExpenses += i;
-                }
-
-                Console.WriteLine("---------------------");
-                Console.WriteLine($"Total Expenses: {totalExpenses}");
-                Console.ReadLine();
-            }
+            ViewExpenses(expenses);
             break;
 
         case 3:
@@ -51,5 +35,26 @@ while (isTrue)
         default:
             System.Console.WriteLine("Enter a valid option number!!");
             break;
+    }
+}
+
+static void ViewExpenses(List<int> expenses)
+{
+    if (expenses.Count == 0)
+    {
+        Console.WriteLine("No expenses added yet!");
+    }
+    else
+    {
+        int totalExpenses = 0;
+        foreach (int i in expenses)
+        {
+            Console.WriteLine($"Expense: {i}");
+            totalExpenses += i;
+        }
+
+        Console.WriteLine("---------------------");
+        Console.WriteLine($"Total Expenses: {totalExpenses}");
+        Console.ReadLine();
     }
 }

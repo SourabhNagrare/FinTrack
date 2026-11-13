@@ -65,26 +65,24 @@ static void ViewExpenses(List<Transaction> expenses)
     if (expenses.Count == 0)
     {
         Console.WriteLine("No expenses added yet!");
+        return; //stopped here.
     }
-    else
-    {
-        int totalExpenses = 0;
-
-        Dictionary<String,int> categoryTotals = new Dictionary<string, int>(); 
+    
+        // 1. To print the loop.
         foreach (Transaction i in expenses)
         {
             Console.WriteLine($"Amount: {i.Amount} | Category : {i.Category} | Date : {i.Date.ToShortDateString()}");
-            totalExpenses += i.Amount;
-
-            if (categoryTotals.ContainsKey(i.Category))
-            {
-                categoryTotals[i.Category] += i.Amount;
-            }
-            else
-            {
-                categoryTotals[i.Category] = i.Amount;
-            }
         }
+
+        // 2. LINQ total
+
+        int totalExpenses = expenses.Sum(item => item.Amount);
+
+        // 3. LINQ category breakdown
+
+        var categoryTotals = expenses.GroupBy(item => item.Category).ToDictionary(g => g.Key, g => g.Sum(t => t.Amount));
+
+        // 4. Print total and dictionary
 
         Console.WriteLine("---------------------");
         Console.WriteLine($"Total Expenses: {totalExpenses}");
@@ -94,7 +92,7 @@ static void ViewExpenses(List<Transaction> expenses)
             Console.WriteLine($"{pair.Key}: {pair.Value}");
         }
         Console.ReadLine();
-    }
+
 }
 
 public class Transaction
